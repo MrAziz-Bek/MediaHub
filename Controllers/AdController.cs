@@ -16,13 +16,9 @@ public class AdController : ControllerBase
     public async Task<IActionResult> PostAsync([FromForm] AdModel ad)
     {
         var adEntity = ad.ToEntity();
-
         var result = await _mediaService.CreateAsync(adEntity);
-
         if (result.IsSuccess)
-        {
             return Ok();
-        }
         return BadRequest();
     }
 
@@ -31,9 +27,7 @@ public class AdController : ControllerBase
     public async Task<IActionResult> GetAsync(Guid id)
     {
         var file = await _mediaService.GetMediaAsync(id);
-
         var stream = new MemoryStream(file.Data);
-
         return File(stream, file.ContentType);
     }
 
@@ -48,11 +42,8 @@ public class AdController : ControllerBase
     public async Task<IActionResult> DeleteAsync(Guid Id)
     {
         var result = await _mediaService.DeleteAsync(Id);
-
         if (result.IsSuccess)
-        {
             return Ok();
-        }
         return BadRequest();
     }
 }
